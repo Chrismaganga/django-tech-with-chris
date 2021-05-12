@@ -1,0 +1,23 @@
+{% extends "main/base.html" %}
+
+{% block title %}
+  {{ls.name}}
+{% endblock title %}
+
+{% block content %}
+
+  <h1>
+    {{ls.name}}
+  </h1>
+
+  <ul>
+    {% for item in ls.item_set.all %}
+      <li class="
+        {% if item.complete == True %}
+          complete
+        {% endif %}
+      ">{{item.text}}</li>
+    {% endfor %}
+  </ul>
+
+{% endblock content %}
