@@ -1,5 +1,4 @@
 from django.core.checks.messages import Debug
-from django.http.response import HttpResponseRedirect
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from .models import ToDoList, Item
