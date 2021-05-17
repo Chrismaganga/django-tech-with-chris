@@ -134,4 +134,4 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 # Login Redirection Settings
 
 LOGIN_REDIRECT_URL = "/"
-LOGOUT_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/login?error=You+logged+out."

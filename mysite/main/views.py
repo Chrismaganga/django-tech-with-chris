@@ -29,25 +29,28 @@ def list_view(response, id):
 
   return render(response, "main/list.html", {"ls": ls})
 
-def home(response):
-  return render(response, "main/home.html", {})
+def view(response):
+  if response.user.is_authenticated:
+    return render(response, "main/view.html", {"response": response})
+  else:
+    return HttpResponseRedirect("/login?error=Please+log+in+first")
 
 def create(response):
-  if response.method == "POST":
-    form = CreateNewList(response.POST)
 
-    if form.is_valid():
-      n = form.cleaned_data["name"]
-      t = ToDoList(name = n)
-      t.save()
-      response.user.todolist.add(t)
+  if response.user.is_authenticated:
+    if response.method == "POST":
+      form = CreateNewList(response.POST)
 
-      return HttpResponseRedirect("/{}".format(t.id))
+      if form.is_valid():
+        n = form.cleaned_data["name"]
+        t = ToDoList(name = n)
+        t.save()
+        response.user.todolist.add(t)
 
+        return HttpResponseRedirect("/{}".format(t.id))
+
+    else:
+      form = CreateNewList()
+      return render(response, "main/create.html", {"form": form})
   else:
-    form = CreateNewList()
-  
-  return render(response, "main/create.html", {"form": form})
-
-def view(response):
-  return render(response, "main/view.html", {})
+    return HttpResponseRedirect("/login?error=Please+log+in+first")

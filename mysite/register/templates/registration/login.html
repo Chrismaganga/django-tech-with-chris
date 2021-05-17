@@ -6,6 +6,12 @@
 
 {% block content %}
 
+  {% if request.GET.error %}
+    <div class="alert alert-primary" role="alert">
+      {{request.GET.error}}
+    </div>
+  {% endif %}
+
   <form method="post" class="form-group">
     {% csrf_token %}
     {{form|crispy}}
