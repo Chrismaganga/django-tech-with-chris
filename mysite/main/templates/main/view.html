@@ -5,10 +5,15 @@
 {% block content %}
   <h3>Your Lists</h3>
   <hr class="mb-3">
+  {% if request.GET.error %}
+    <div class="alert alert-primary" role="alert">
+      {{request.GET.error}}
+    </div>
+  {% endif %}
   {% if response.user.todolist.all %}
     <div class="list-group">
       {% for td in response.user.todolist.all %}
-        <a href="/{{td.id}}" class="list-group-item list-group-item-action">{{td.name}}</a>
+        <a href="view/{{td.id}}" class="list-group-item list-group-item-action">{{td.name}}</a>
       {% endfor %}
     </div>
     {% else %}
