@@ -4,10 +4,17 @@
 
 {% block content %}
   <h3>Your Lists</h3>
-
-  <ul>
-    {% for td in user.todolist.all %}
-      <li><a href="/{{td.id}}">{{td.name}}</a></li>
-    {% endfor %}
-  </ul>
+  <hr class="mb-3">
+  {% if response.user.todolist.all %}
+    <div class="list-group">
+      {% for td in response.user.todolist.all %}
+        <a href="/{{td.id}}" class="list-group-item list-group-item-action">{{td.name}}</a>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="alert alert-warning">
+      You don't have any lists yet!<br>
+      <a href="/create">Create &rarr;</a>
+    </div>
+  {% endif %}
 {% endblock content %}

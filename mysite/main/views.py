@@ -51,6 +51,6 @@ def create(response):
 
     else:
       form = CreateNewList()
-      return render(response, "main/create.html", {"form": form})
+      return render(response, "main/create.html", {"form": form, "response": response})
   else:
     return HttpResponseRedirect("/login?error=Please+log+in+first")

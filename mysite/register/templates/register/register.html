@@ -4,7 +4,8 @@
 
 {% load crispy_forms_tags %}
 {% block content %}
-  <h2>Create New Account</h2>
+  <h3><a href="/login">Login</a> / Register</h3>
+  <hr class="mb-3">
   <form class="form-group" method="POST">
     {% csrf_token %}
 
