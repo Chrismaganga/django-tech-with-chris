@@ -7,9 +7,6 @@
   <form action="/create/" method="post" class="form-group">
     {% csrf_token %}
     <div class="input-group mb-3">
-      <!-- <div class="input-group-prepend">
-        <button type="submit" class="btn btn-success">Save</button>
-      </div> -->
       <span class="input-group-text">List Name</span>
       {{form.name}}
     </div>
