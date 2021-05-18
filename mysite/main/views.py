@@ -8,46 +8,53 @@ from .forms import CreateNewList
 
 def list_view(response, id):
   ls = ToDoList.objects.get(id=id)
-  if response.method == "POST":
-    if response.POST.get("save"):
-      for item in ls.item_set.all():
-        if response.POST.get(str(item.id) + "_c") == "checked":
-          item.complete = True
-        else:
-          item.complete = False
+  print("DEBUG: ", response.user.is_authenticated)
+  print("DEBUG: ", response.user.id)
+  if response.user.is_authenticated and ls.user.id == response.user.id:
+    # If user logged in and owner of list
+    if response.method == "POST":
+      if response.POST.get("save"):
+        for item in ls.item_set.all():
+          if response.POST.get(str(item.id) + "_c") == "checked":
+            item.complete = True
+          else:
+            item.complete = False
 
-        item.save()
-
-      if response.POST.get(str(item.id) + "_t"):
-        for item in ls.item_set.all(): 
-          item.text = response.POST.get(str(item.id) + "_t")
           item.save()
 
-      if response.POST.get("itemDelete"):
-        items_to_delete = response.POST.get("itemDelete").split(",");
-        for item_id in items_to_delete:
-          ls.item_set.filter(id=item_id).delete()
+        if response.POST.get(str(item.id) + "_t"):
+          for item in ls.item_set.all(): 
+            item.text = response.POST.get(str(item.id) + "_t")
+            item.save()
 
-      if response.POST.get("listName"):
-        if len(response.POST.get("listName")) > 2:
-          ls.name = response.POST.get("listName")
-          ls.save()
+        if response.POST.get("itemDelete"):
+          items_to_delete = response.POST.get("itemDelete").split(",");
+          for item_id in items_to_delete:
+            ls.item_set.filter(id=item_id).delete()
 
-
-    elif response.POST.get("newItem"):
-      item_text = response.POST.get("newText")
-      
-      if len(item_text) > 2:
-        ls.item_set.create(text = item_text, complete = False)
-      else:
-        print("Invalid input")
-
-    elif response.POST.get("listDelete"):
-      ls.delete()
-      return HttpResponseRedirect("/?error=List+deleted")
+        if response.POST.get("listName"):
+          if len(response.POST.get("listName")) > 2:
+            ls.name = response.POST.get("listName")
+            ls.save()
 
 
-  return render(response, "main/list.html", {"ls": ls})
+      elif response.POST.get("newItem"):
+        item_text = response.POST.get("newText")
+        
+        if len(item_text) > 2:
+          ls.item_set.create(text = item_text, complete = False)
+        else:
+          print("Invalid input")
+
+      elif response.POST.get("listDelete"):
+        ls.delete()
+        return HttpResponseRedirect("/?error=List+deleted.")
+
+    return render(response, "main/list.html", {"ls": ls})
+
+  else:
+    # If user not logged in or not owner of list
+    return HttpResponseRedirect("/login?error=Unauthorized+access.")
 
 def view(response):
   if response.user.is_authenticated:
