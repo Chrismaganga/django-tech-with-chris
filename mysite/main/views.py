@@ -58,13 +58,6 @@ def list_view(response, id):
 
 def view(response):
   if response.user.is_authenticated:
-    return render(response, "main/view.html", {"response": response})
-  else:
-    return HttpResponseRedirect("/login?error=Please+log+in+first.")
-
-def create(response):
-
-  if response.user.is_authenticated:
     if response.method == "POST":
       form = CreateNewList(response.POST)
 
@@ -72,12 +65,14 @@ def create(response):
         n = form.cleaned_data["name"]
         t = ToDoList(name = n)
         t.save()
-        response.user.todolist.add(t)
+        response.user.todolist.add(t) # models.py ToDoList.User[ForeignKey][name="todolist"]
 
         return HttpResponseRedirect("/view/{}".format(t.id))
+      else:
+        return HttpResponseRedirect("/?error=Validation+Error.")
 
     else:
       form = CreateNewList()
-      return render(response, "main/create.html", {"form": form, "response": response})
+      return render(response, "main/view.html", {"form": form, "response": response})
   else:
     return HttpResponseRedirect("/login?error=Please+log+in+first.")

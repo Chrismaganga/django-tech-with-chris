@@ -19,7 +19,14 @@
     {% else %}
     <div class="alert alert-warning">
       You don't have any lists yet!<br>
-      <a href="/create">Create &rarr;</a>
     </div>
   {% endif %}
+  <hr class="mb-3">
+  <form method="post" class="form-group">
+    {% csrf_token %}
+    <div class="input-group mb-3">
+      {{form.name}}
+      <button type="submit" class="btn btn-success">Submit</button>
+    </div>
+  </form>
 {% endblock content %}
