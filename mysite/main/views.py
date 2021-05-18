@@ -50,7 +50,7 @@ def list_view(response, id):
         ls.delete()
         return HttpResponseRedirect("/?error=List+deleted.")
 
-    return render(response, "main/list.html", {"ls": ls})
+    return render(response, "main/list.html", {"ls": ls, "response": response})
 
   else:
     # If user not logged in or not owner of list
@@ -60,7 +60,7 @@ def view(response):
   if response.user.is_authenticated:
     return render(response, "main/view.html", {"response": response})
   else:
-    return HttpResponseRedirect("/login?error=Please+log+in+first")
+    return HttpResponseRedirect("/login?error=Please+log+in+first.")
 
 def create(response):
 
@@ -80,4 +80,4 @@ def create(response):
       form = CreateNewList()
       return render(response, "main/create.html", {"form": form, "response": response})
   else:
-    return HttpResponseRedirect("/login?error=Please+log+in+first")
+    return HttpResponseRedirect("/login?error=Please+log+in+first.")

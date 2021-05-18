@@ -5,8 +5,7 @@
 {% block content %}
 
   <div class="page list">
-    <form method="post"
-      onsubmit="return confirm('Are you sure you want to delete the list?')">
+    <form method="post">
       {% csrf_token %}
       <div class="input-group input-group-lg">
         <input type="text" value="{{ls.name}}" name="listName" class="form-control border-0 border-bottom border-3 mb-3 list-title">
