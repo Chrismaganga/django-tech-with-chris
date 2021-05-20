@@ -15,17 +15,18 @@ def list_view(response, id):
     if response.method == "POST":
       if response.POST.get("save"):
         for item in ls.item_set.all():
+          # if the item was un/checked          
           if response.POST.get(str(item.id) + "_c") == "checked":
             item.complete = True
           else:
             item.complete = False
+          
+          # if the item's text was updated
+          if response.POST.get(str(item.id) + "_t"):
+            item.text = response.POST.get(str(item.id) + "_t")
 
           item.save()
 
-        if response.POST.get(str(item.id) + "_t"):
-          for item in ls.item_set.all(): 
-            item.text = response.POST.get(str(item.id) + "_t")
-            item.save()
 
         if response.POST.get("itemDelete"):
           items_to_delete = response.POST.get("itemDelete").split(",");
