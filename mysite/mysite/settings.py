@@ -35,7 +35,7 @@ DEBUG = os.environ.get('DEBUG', '') != 'False'
 # Heroku has the hosts listed as '127.0.0.1, host1.com, host2.com'
 # we need to convert the string into a list.
 
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '127.0.0.1').split(', ')
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '127.0.0.1, 0.0.0.0').split(', ')
 
 
 # Application definition
