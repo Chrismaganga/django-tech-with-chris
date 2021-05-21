@@ -32,8 +32,10 @@ SECRET_KEY = os.environ['SECRET_KEY']
 # DEBUG = True
 DEBUG = os.environ.get('DEBUG', '') != 'False'
 
+# Heroku has the hosts listed as '127.0.0.1, host1.com, host2.com'
+# we need to convert the string into a list.
 
-ALLOWED_HOSTS = ['127.0.0.1', 'djankytodolists.herokuapp.com']
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS').split(', ')
 
 
 # Application definition
