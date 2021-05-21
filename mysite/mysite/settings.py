@@ -30,7 +30,7 @@ DEBUG = True
 # DEBUG = False
 
 
-ALLOWED_HOSTS = ['127.0.0.1', '0.0.0.0', 'https://djankytodolists.herokuapp.com/']
+ALLOWED_HOSTS = ['127.0.0.1', '0.0.0.0', 'djankytodolists.herokuapp.com']
 
 
 # Application definition
