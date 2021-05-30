@@ -8,8 +8,6 @@ from .forms import CreateNewList
 
 def list_view(response, id):
   ls = ToDoList.objects.get(id=id)
-  print("DEBUG: ", response.user.is_authenticated)
-  print("DEBUG: ", response.user.id)
   if response.user.is_authenticated and ls.user.id == response.user.id:
     # If user logged in and owner of list
     if response.method == "POST":
