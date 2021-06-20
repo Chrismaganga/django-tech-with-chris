@@ -11,9 +11,13 @@ class ToDoList(models.Model):
     return self.name
   
 class Item(models.Model):
+  createdAt = createdAt = models.DateTimeField(auto_now_add=True)
   todolist = models.ForeignKey(ToDoList, on_delete=models.CASCADE)
   text = models.CharField(max_length=300)
-  complete = models.BooleanField()
+  complete = models.BooleanField()  
+
+  class Meta:
+    ordering = ['-createdAt']
   
   def __str__(self):
     return self.text
